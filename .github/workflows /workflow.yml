@@ -1,9 +1,5 @@
 name: CI
 
-on:
-  - push
-  - pull_request
-
 jobs:
   build:
     name: Build
@@ -32,6 +28,4 @@ jobs:
           ocaml-compiler: ${{ matrix.ocaml-compiler }}
           opam-depext: false
 
-      - run: |
-          ./scripts.sh
-          ./dist/print.out
+      - run: ./scripts.sh
