@@ -32,4 +32,4 @@ jobs:
           ocaml-compiler: ${{ matrix.ocaml-compiler }}
           opam-depext: false
 
-      - run: dune runtest
+      - run: opam exec -- dune runtest
