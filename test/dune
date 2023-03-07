@@ -1,1 +1,1 @@
-(cram (deps %{bin:ocamlc} %{bin:refmt} ./script.sh input.re))
+(cram (deps %{bin:ocamlc} script.bat input.re))
