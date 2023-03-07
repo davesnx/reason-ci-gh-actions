@@ -32,4 +32,6 @@ jobs:
           ocaml-compiler: ${{ matrix.ocaml-compiler }}
           opam-depext: false
 
+      - run: opam install . --deps-only
+
       - run: opam exec -- dune runtest

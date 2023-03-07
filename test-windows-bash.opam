@@ -11,8 +11,9 @@ build: [
   ["dune" "build" "-p" name "-j" jobs]
 ]
 depends: [
-  "ocaml"         {>= "4.03" & < "5.1"}
+  "ocaml" {>= "4.03" & < "5.1"}
   "reason" {= "3.8.2"}
+  "dune" {>= "3" & < "4"}
 ]
 synopsis: "Reason: Syntax & Toolchain for OCaml"
 description: """
