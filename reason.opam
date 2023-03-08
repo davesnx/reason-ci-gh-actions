@@ -1,6 +1,6 @@
 opam-version: "2.0"
-maintainer: ""
-authors: [ "" ]
+maintainer: "Jordan Walke <jordojw@gmail.com>"
+authors: [ "Jordan Walke <jordojw@gmail.com>" ]
 license: "MIT"
 homepage: "https://github.com/reasonml/reason"
 doc: "https://reasonml.github.io/"
@@ -12,8 +12,13 @@ build: [
 ]
 depends: [
   "ocaml" {>= "4.03" & < "5.1"}
-  "reason" {= "3.8.2"}
-  "dune" {>= "3" & < "4"}
+  "dune" {>= "2.3"}
+  "ocamlfind" {build}
+  "menhir" {>= "20180523"}
+  "merlin-extend" {>= "0.6"}
+  "fix"
+  "result"
+  "ppx_derivers"
 ]
 synopsis: "Reason: Syntax & Toolchain for OCaml"
 description: """

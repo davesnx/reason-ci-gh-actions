@@ -1,1 +1,7 @@
-(cram (deps %{bin:ocamlc} script.bat input.re))
+(cram
+ (deps %{bin:ocamlc} %{bin:refmt_impl} input.re))
+
+(env
+ (_
+  (binaries
+   (%{project_root}/src/refmt/refmt_impl.exe as refmt_impl))))
