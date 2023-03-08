@@ -1,0 +1,5 @@
+(lang dune 2.8)
+
+(context
+ (default
+ (paths (PATH _build/default/src/refmt :standard))))
