@@ -4,6 +4,8 @@ Run ocamlc with refmt as a preprocessor
 
   $ echo $PATH
 
+  $ mv .bin/refmt_impl .bin/refmt_impl.exe
+
   $ ls -la
 
   $ ls -la .bin
