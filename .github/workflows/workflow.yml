@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  build:
+    name: Build
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - windows-latest
+        # Please keep the list in sync with the minimal version of OCaml in
+        # dune-project, dune.opam.template and bootstrap.ml
+        #
+        # We don't run tests on all versions of the Windows environment and on
+        # 4.02.x and 4.07.x in other environments
+        ocaml-compiler:
+          - 4.14.x
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use OCaml ${{ matrix.ocaml-compiler }}
+        uses: ocaml/setup-ocaml@v2
+        with:
+          ocaml-compiler: ${{ matrix.ocaml-compiler }}
+          opam-depext: false
+
+      - run: opam install . --deps-only
+
+      - run: opam exec -- dune runtest
