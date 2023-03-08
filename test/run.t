@@ -4,4 +4,8 @@ Run ocamlc with refmt as a preprocessor
 
   $ echo $PATH
 
+  $ ls -la
+
+  $ ls -la .bin
+
   $ ocamlc -c -verbose -pp "refmt_impl --print binary" -intf-suffix .rei -impl input.re
