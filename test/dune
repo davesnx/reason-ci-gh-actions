@@ -1,2 +1,2 @@
 (cram
- (deps %{bin:ocamlc} %{project_root}/src/refmt/refmt_impl.exe input.re))
+ (deps %{bin:ocamlc} %{bin:refmt} input.re))
