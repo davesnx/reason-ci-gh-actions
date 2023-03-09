@@ -1,4 +1,4 @@
-name: CI
+name: opam CI
 
 on:
   - push
@@ -11,13 +11,26 @@ jobs:
       fail-fast: false
       matrix:
         os:
+          - ubuntu-latest
+          - macos-latest
           - windows-latest
-        # Please keep the list in sync with the minimal version of OCaml in
-        # dune-project, dune.opam.template and bootstrap.ml
-        #
-        # We don't run tests on all versions of the Windows environment and on
-        # 4.02.x and 4.07.x in other environments
+
         ocaml-compiler:
+          # Please keep the list in sync with the minimal version of OCaml in
+          # dune-project, dune.opam.template and bootstrap.ml
+          #
+          # We don't run tests on all versions of the Windows environment and on
+          # 4.02.x and 4.07.x in other environments
+          # - 4.03.x
+          # - 4.04.x
+          # - 4.06.x
+          # - 4.07.x
+          # - 4.08.x
+          # - 4.09.x
+          # - 4.10.x
+          # - 4.12.x
+          # - 4.13.x
+          # - 4.12.x
           - 4.14.x
 
     runs-on: ${{ matrix.os }}
