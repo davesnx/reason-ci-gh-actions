@@ -4,7 +4,7 @@ on:
   pull_request:
   push:
    branches:
-     - main
+     - master
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -64,9 +64,7 @@ jobs:
 
       - name: Print esy cache
         id: print_esy_cache
-        run: |
-          echo "ESY_CACHE=$(node .github/workflows/print-esy-cache.js)" >> $GITHUB_OUTPUT
-          echo "$ESY_CACHE"
+        run: echo "ESY_CACHE=$(node .github/workflows/print-esy-cache.js)" >> $GITHUB_OUTPUT
 
       - name: Load dependencies cache
         if: ${{ steps.print_esy_cache.outputs.ESY_CACHE }}
