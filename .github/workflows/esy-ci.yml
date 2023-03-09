@@ -55,10 +55,13 @@ jobs:
 
       - name: Print esy cache
         id: print_esy_cache
-        run: echo "ESY_CACHE=$(node .github/workflows/print-esy-cache.js)" >> $GITHUB_OUTPUT
+        run: |
+          echo "ESY_CACHE=$(node .github/workflows/print-esy-cache.js)" >> $GITHUB_OUTPUT
+          echo "$ESY_CACHE"
 
       - name: Load dependencies cache
         id: deps-cache
+        if: ${{ steps.print_esy_cache.outputs.ESY_CACHE }} != ""
         uses: actions/cache@v3
         with:
           path: ${{ steps.print_esy_cache.outputs.ESY_CACHE }}
