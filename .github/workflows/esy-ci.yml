@@ -45,7 +45,7 @@ jobs:
           cache: 'yarn'
 
       - name: Install esy
-        run: npm ci
+        run: yarn install --frozen-lockfile
 
       - name: Restore global cache (~/.esy/source)
         uses: actions/cache/restore@v3
