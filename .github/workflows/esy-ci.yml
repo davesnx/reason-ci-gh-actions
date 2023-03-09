@@ -1,0 +1,87 @@
+name: esy CI
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  build:
+    name: Build
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+
+        ocaml-compiler:
+          # Please keep the list in sync with the minimal version of OCaml in
+          # dune-project, dune.opam.template and bootstrap.ml
+          #
+          # We don't run tests on all versions of the Windows environment and on
+          # 4.02.x and 4.07.x in other environments
+          # - 4.03.x
+          # - 4.04.x
+          # - 4.06.x
+          # - 4.07.x
+          # - 4.08.x
+          # - 4.09.x
+          # - 4.10.x
+          # - 4.12.x
+          # - 4.13.x
+          # - 4.12.x
+          - 4.14.x
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+
+      - name: Load global cache (~/.esy/source)
+        uses: actions/cache@v3
+        with:
+          path: ~/.esy/source
+          key: source-${{ matrix.os }}-${{ hashFiles('**/index.json') }}
+
+      - name: Install esy
+        run: npm install -g esy@0.6.12
+
+      - name: Install dependencies
+        run: esy install
+
+      - name: Print esy cache
+        id: print_esy_cache
+        run: echo "ESY_CACHE=$(node .github/workflows/print-esy-cache.js)" >> $GITHUB_OUTPUT
+
+      - name: Load dependencies cache
+        id: deps-cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.print_esy_cache.outputs.ESY_CACHE }}
+          key: build-${{ matrix.os }}-${{ hashFiles('**/index.json') }}
+          restore-keys: build-${{ matrix.os }}-
+
+      - name: Import dependencies
+        run: esy import-build
+
+      - name: Build dependencies
+        run: esy build-dependencies
+
+      - name: Build
+        run: esy build
+
+      - name: Test
+        run: esy dune runtest
+
+      - name: Export dependencies
+        if: steps.deps-cache.outputs.cache-hit != 'true'
+        run: esy export-dependencies
+
+      # Cleanup build cache in case dependencies have changed
+      - name: Cleanup
+        if: steps.deps-cache.outputs.cache-hit != 'true'
+        run: esy cleanup .
