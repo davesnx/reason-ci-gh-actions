@@ -1,5 +1,5 @@
 (lang dune 2.8)
-(name bug)
+(name reason)
 
 (using menhir 2.0)
 (cram enable)
