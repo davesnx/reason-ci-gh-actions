@@ -42,10 +42,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: 'yarn'
+          cache: 'npm'
 
       - name: Install esy
-        run: yarn install --frozen-lockfile
+        run: npm install -g esy@0.6.12
 
       - name: Restore global cache (~/.esy/source)
         uses: actions/cache/restore@v3
