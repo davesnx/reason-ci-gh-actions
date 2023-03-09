@@ -85,10 +85,15 @@ jobs:
         run: esy build
 
       - name: Test
+        if: ${{ matrix.os }} != "windows-latest"
         run: esy dune runtest
 
+      - name: Test
+        if: ${{ matrix.os }} == "windows-latest"
+        run: esy b dune runtest -p reason,rtop
+
       - name: Export dependencies
-        if: steps.deps-cache.outputs.cache-hit != 'true'
+        if: ${{ steps.deps-cache.outputs.cache-hit }} != 'true'
         run: esy export-dependencies
 
       # Cleanup build cache in case dependencies have changed
