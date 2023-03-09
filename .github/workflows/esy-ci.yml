@@ -85,11 +85,11 @@ jobs:
         run: esy build
 
       - name: Test
-        if: ${{ matrix.os }} != "windows-latest"
+        if: runner.os != 'Windows'
         run: esy dune runtest
 
       - name: Test
-        if: ${{ matrix.os }} == "windows-latest"
+        if: runner.os == 'Windows'
         run: esy b dune runtest -p reason,rtop
 
       - name: Export dependencies
