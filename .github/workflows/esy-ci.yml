@@ -40,15 +40,18 @@ jobs:
 
       - name: Use Node.js
         uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'yarn'
+
+      - name: Install esy
+        run: npm ci
 
       - name: Restore global cache (~/.esy/source)
         uses: actions/cache/restore@v3
         with:
           path: ~/.esy/source
           key: source-${{ matrix.os }}-${{ hashFiles('**/index.json') }}
-
-      - name: Install esy
-        run: npm install -g esy@0.6.12
 
       - name: Install dependencies
         run: esy install
@@ -62,7 +65,7 @@ jobs:
       - name: Load dependencies cache
         if: ${{ steps.print_esy_cache.outputs.ESY_CACHE }}
         id: deps-cache
-        uses: actions/cache@v3
+        uses: actions/cache/restore@v3
         with:
           path: ${{ steps.print_esy_cache.outputs.ESY_CACHE }}
           key: build-${{ matrix.os }}-${{ hashFiles('**/index.json') }}
@@ -88,3 +91,16 @@ jobs:
       - name: Cleanup
         if: steps.deps-cache.outputs.cache-hit != 'true'
         run: esy cleanup .
+
+      - name: Save global cache
+        uses: actions/cache/save@v3
+        with:
+          path: ~/.esy/source
+          key: source-${{ matrix.os }}-${{ hashFiles('**/index.json') }}
+
+      - name: Save dependencies cache
+        if: ${{ steps.print_esy_cache.outputs.ESY_CACHE }}
+        uses: actions/cache/restore@v3
+        with:
+          path: ${{ steps.print_esy_cache.outputs.ESY_CACHE }}
+          key: build-${{ matrix.os }}-${{ hashFiles('**/index.json') }}
