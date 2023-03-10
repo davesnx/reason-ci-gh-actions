@@ -75,13 +75,6 @@ jobs:
           key: build-${{ matrix.os }}-${{ hashFiles('**/index.json') }}
           restore-keys: build-${{ matrix.os }}-
 
-      # - name: Import build
-        # run: esy import-build
-      
-      #- name: Import dependencies when Windows
-        #if: runner.os == 'Windows'
-        #run: esy.cmd import-dependencies
-
       - name: Import dependencies
         run: esy import-dependencies
 

@@ -8,7 +8,7 @@
 *.cmxs
 *.cmxa
 
-# ocamlbuild working directory
+# dune working directory
 _build/
 
 # ocamlbuild targets
@@ -29,3 +29,6 @@ setup.log
 _opam/
 
 dist/
+
+# Esy
+_export/
