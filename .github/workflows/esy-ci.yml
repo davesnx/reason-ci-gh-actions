@@ -75,8 +75,16 @@ jobs:
           key: build-${{ matrix.os }}-${{ hashFiles('**/index.json') }}
           restore-keys: build-${{ matrix.os }}-
 
-      - name: Import dependencies
-        run: esy import-build
+      # - name: Import build
+        # run: esy import-build
+      
+      #- name: Import dependencies when Windows
+        #if: runner.os == 'Windows'
+        #run: esy.cmd import-dependencies
+
+      #- name: Import dependencies when not Windows
+        #if: runner.os != 'Windows'
+        #run: esy import-dependencies
 
       - name: Build dependencies
         run: esy build-dependencies
@@ -84,13 +92,13 @@ jobs:
       - name: Build
         run: esy build
 
-      - name: Test for not Windows
+      - name: Test when not Windows
         if: runner.os != 'Windows'
         run: esy dune runtest
 
-      - name: Test for Windows
+      - name: Test when Windows
         if: runner.os == 'Windows'
-        run: esy b dune runtest -p reason,rtop
+        run: esy b dune runtest -p "reason,rtop"
 
       - name: Export dependencies
         if: steps.deps-cache.outputs.cache-hit != 'true'
