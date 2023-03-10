@@ -75,7 +75,9 @@ jobs:
         id: deps-cache
         uses: actions/cache/restore@v3
         with:
-          path: ${{ steps.print_esy_cache.outputs.ESY_CACHE }}
+          path: |
+            ${{ steps.print_esy_cache.outputs.ESY_CACHE }}
+            _export
           key: build-${{ matrix.os }}-${{ hashFiles('**/index.json') }}
           restore-keys: build-${{ matrix.os }}-
 
@@ -100,11 +102,6 @@ jobs:
         if: steps.deps-cache.outputs.cache-hit != 'true'
         run: esy export-dependencies
 
-      # Cleanup build cache in case dependencies have changed
-      - name: Cleanup
-        if: steps.deps-cache.outputs.cache-hit != 'true'
-        run: esy cleanup .
-
       - name: Save global cache
         uses: actions/cache/save@v3
         with:
@@ -115,5 +112,12 @@ jobs:
         if: ${{ steps.print_esy_cache.outputs.ESY_CACHE }}
         uses: actions/cache/restore@v3
         with:
-          path: ${{ steps.print_esy_cache.outputs.ESY_CACHE }}
+          path: |
+            ${{ steps.print_esy_cache.outputs.ESY_CACHE }}
+            _export
           key: build-${{ matrix.os }}-${{ hashFiles('**/index.json') }}
+
+      # Cleanup build cache in case dependencies have changed
+      - name: Cleanup
+        if: steps.deps-cache.outputs.cache-hit != 'true'
+        run: esy cleanup .
