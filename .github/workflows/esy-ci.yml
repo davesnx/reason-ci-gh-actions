@@ -82,7 +82,10 @@ jobs:
           restore-keys: build-${{ matrix.os }}-
 
       - name: Import dependencies
-        run: esy import-dependencies
+        if: steps.esy-cache.outputs.cache-hit == 'true'
+        run: |
+          esy import-dependencies _export
+          rm -rf _export
 
       - name: Build dependencies
         run: esy build-dependencies
