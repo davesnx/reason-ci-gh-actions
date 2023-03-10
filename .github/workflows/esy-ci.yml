@@ -84,11 +84,11 @@ jobs:
       - name: Build
         run: esy build
 
-      - name: Test
+      - name: Test for not Windows
         if: runner.os != 'Windows'
         run: esy dune runtest
 
-      - name: Test
+      - name: Test for Windows
         if: runner.os == 'Windows'
         run: esy b dune runtest -p reason,rtop
 
