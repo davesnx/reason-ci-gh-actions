@@ -93,7 +93,7 @@ jobs:
         run: esy b dune runtest -p reason,rtop
 
       - name: Export dependencies
-        if: ${{ steps.deps-cache.outputs.cache-hit }} != 'true'
+        if: steps.deps-cache.outputs.cache-hit != 'true'
         run: esy export-dependencies
 
       # Cleanup build cache in case dependencies have changed
