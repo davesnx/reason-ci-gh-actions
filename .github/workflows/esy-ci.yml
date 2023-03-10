@@ -82,9 +82,8 @@ jobs:
         #if: runner.os == 'Windows'
         #run: esy.cmd import-dependencies
 
-      #- name: Import dependencies when not Windows
-        #if: runner.os != 'Windows'
-        #run: esy import-dependencies
+      - name: Import dependencies
+        run: esy import-dependencies
 
       - name: Build dependencies
         run: esy build-dependencies
