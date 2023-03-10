@@ -61,7 +61,7 @@ jobs:
         uses: actions/cache/restore@v3
         with:
           path: ~/.esy/source
-          key: source-${{ matrix.os }}-${{ hashFiles('**/index.json') }}
+          key: source-${{ matrix.os }}-${{ hashFiles('esy.lock.json') }}
 
       - name: Install dependencies
         run: esy install
@@ -77,7 +77,7 @@ jobs:
           path: |
             ${{ steps.print_esy_cache.outputs.ESY_CACHE }}
             _export
-          key: build-${{ matrix.os }}-${{ hashFiles('**/index.json') }}
+          key: build-${{ matrix.os }}-${{ hashFiles('esy.lock.json') }}
           restore-keys: build-${{ matrix.os }}-
 
       - name: Import dependencies
@@ -108,7 +108,7 @@ jobs:
         uses: actions/cache/save@v3
         with:
           path: ~/.esy/source
-          key: source-${{ matrix.os }}-${{ hashFiles('**/index.json') }}
+          key: source-${{ matrix.os }}-${{ hashFiles('esy.lock.json') }}
 
       - name: Save dependencies cache
         if: ${{ steps.print_esy_cache.outputs.ESY_CACHE }}
@@ -117,7 +117,7 @@ jobs:
           path: |
             ${{ steps.print_esy_cache.outputs.ESY_CACHE }}
             _export
-          key: build-${{ matrix.os }}-${{ hashFiles('**/index.json') }}
+          key: build-${{ matrix.os }}-${{ hashFiles('esy.lock.json') }}
 
       # Cleanup build cache in case dependencies have changed
       - name: Cleanup
