@@ -65,7 +65,7 @@ jobs:
       - name: Print esy cache
         id: print_esy_cache
         run: |
-          node github/workflows/print-esy-cache-debug.js;
+          node .github/workflows/print-esy-cache-debug.js;
           echo "ESY_CACHE=$(node .github/workflows/print-esy-cache.js)" >> $GITHUB_OUTPUT
 
       - name: Load dependencies cache
