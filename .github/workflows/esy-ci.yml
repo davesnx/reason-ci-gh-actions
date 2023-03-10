@@ -112,7 +112,7 @@ jobs:
 
       - name: Save dependencies cache
         if: ${{ steps.print_esy_cache.outputs.ESY_CACHE }}
-        uses: actions/cache/restore@v3
+        uses: actions/cache/save@v3
         with:
           path: |
             ${{ steps.print_esy_cache.outputs.ESY_CACHE }}
