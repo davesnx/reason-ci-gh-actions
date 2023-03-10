@@ -55,7 +55,7 @@ jobs:
           cache: 'npm'
 
       - name: Install esy
-        run: npm install -g esy@0.6.12
+        run: npm ci -g esy@0.6.12
 
       - name: Restore global cache (~/.esy/source)
         uses: actions/cache/restore@v3
