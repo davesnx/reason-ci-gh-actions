@@ -71,7 +71,6 @@ jobs:
         run: echo "ESY_CACHE=$(node .github/workflows/print-esy-cache.js)" >> $GITHUB_OUTPUT;
 
       - name: Load dependencies cache
-        if: ${{ steps.print_esy_cache.outputs.ESY_CACHE }}
         id: deps-cache
         uses: actions/cache/restore@v3
         with:
