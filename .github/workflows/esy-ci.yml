@@ -94,6 +94,7 @@ jobs:
         run: esy build
 
       - name: Test when not Windows
+        if: runner.os != 'Windows'
         run: esy dune runtest
 
       - name: Test when Windows
