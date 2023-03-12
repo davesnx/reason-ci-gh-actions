@@ -82,7 +82,7 @@ jobs:
           restore-keys: esy-build-${{ matrix.os }}-
 
       - name: Import dependencies
-        if: steps.esy-cache.outputs.cache-hit == 'true'
+        if: steps.deps-cache.outputs.cache-hit == 'true'
         run: |
           esy import-dependencies _export
           rm -rf _export
@@ -93,8 +93,12 @@ jobs:
       - name: Build
         run: esy build
 
-      - name: Test
+      - name: Test when not Windows
         run: esy dune runtest
+
+      - name: Test when Windows
+        if: runner.os == 'Windows'
+        run: esy b dune runtest -p "reason,rtop"
 
       - name: Export dependencies
         if: steps.deps-cache.outputs.cache-hit != 'true'
