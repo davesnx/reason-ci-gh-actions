@@ -58,6 +58,7 @@ jobs:
         run: npm install -g esy@0.6.12
 
       - name: Restore global cache (~/.esy/source)
+        id: global-cache
         uses: actions/cache/restore@v3
         with:
           path: ~/.esy/source
@@ -106,12 +107,13 @@ jobs:
 
       - name: Save global cache
         uses: actions/cache/save@v3
+        if: steps.global-cache.outputs.cache-hit != 'true'
         with:
           path: ~/.esy/source
           key: esy-source-${{ matrix.os }}-${{ hashFiles('esy.lock.json') }}
 
       - name: Save dependencies cache
-        if: ${{ steps.print_esy_cache.outputs.ESY_CACHE }}
+        if: steps.deps-cache.outputs.cache-hit != 'true'
         uses: actions/cache/save@v3
         with:
           path: |
