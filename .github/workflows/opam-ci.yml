@@ -29,14 +29,13 @@ jobs:
           # 4.02.x and 4.07.x in other environments
           # - 4.03.x
           # - 4.04.x
-          # - 4.06.x
+          - 4.06.x
           # - 4.07.x
-          # - 4.08.x
+          - 4.08.x
           # - 4.09.x
-          # - 4.10.x
+          - 4.10.x
           # - 4.12.x
-          # - 4.13.x
-          # - 4.12.x
+          - 4.13.x
           - 4.14.x
 
     runs-on: ${{ matrix.os }}
@@ -50,6 +49,7 @@ jobs:
         with:
           ocaml-compiler: ${{ matrix.ocaml-compiler }}
           opam-depext: false
+          opam-pin: false
 
       - name: Install dependencies
         run: opam install . --deps-only
