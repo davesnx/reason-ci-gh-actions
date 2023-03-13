@@ -51,15 +51,21 @@ jobs:
       - name: Install dependencies
         run: opam install . --deps-only
 
-      - name: Save cache
-        uses: actions/cache/save@v3
-        if: steps.opam-cache.outputs.cache-hit != 'true'
-        with:
-          path: ~/.opam
-          key: opam-${{ matrix.os }}-${{ matrix.ocaml-compiler }}-${{ hashFiles('**.opam') }}
+      - name: Debug ~
+        run: ls -lsha ~
+      
+      - name: Debug .
+        run: ls -lsha
 
       - name: Build reason and rtop
         run: opam exec -- dune build -p reason,rtop
 
       - name: Test
         run: opam exec -- dune runtest
+
+      - name: Save cache
+        uses: actions/cache/save@v3
+        if: steps.opam-cache.outputs.cache-hit != 'true'
+        with:
+          path: ~/.opam
+          key: opam-${{ matrix.os }}-${{ matrix.ocaml-compiler }}-${{ hashFiles('**.opam') }}
