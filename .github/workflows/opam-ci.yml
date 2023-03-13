@@ -49,7 +49,6 @@ jobs:
           key: opam-${{ matrix.os }}-${{ matrix.ocaml-compiler }}-${{ hashFiles('**.opam') }}
 
       - name: Install dependencies
-        if: steps.opam-cache.outputs.cache-hit != 'true'
         run: opam install . --deps-only
 
       - name: Save cache
