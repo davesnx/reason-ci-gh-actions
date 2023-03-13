@@ -43,7 +43,6 @@ jobs:
         uses: ocaml/setup-ocaml@v2
         with:
           ocaml-compiler: ${{ matrix.ocaml-compiler }}
-          opam-depext: false
           opam-pin: false
           dune-cache: true
 
@@ -74,4 +73,4 @@ jobs:
           key: opam-dune-${{ matrix.os }}-${{ matrix.ocaml-compiler }}-${{ hashFiles('**.opam') }}
 
       - name: Test
-        run: opam exec -- dune runtest
+        run: opam exec -- dune runtest --cache=disabled
