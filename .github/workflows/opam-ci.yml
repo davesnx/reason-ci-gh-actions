@@ -41,7 +41,15 @@ jobs:
           ocaml-compiler: ${{ matrix.ocaml-compiler }}
           opam-pin: false
 
+      - name: Load opam cache
+        id: opam-cache
+        uses: actions/cache@v3
+        with:
+          path: "~/.opam"
+          key: opam-${{ matrix.os }}-${{ matrix.ocaml-compiler }}-${{ hashFiles('**.opam') }}
+
       - name: Install dependencies
+        if: steps.opam-cache.outputs.cache-hit != 'true'
         run: opam install . --deps-only
 
       - name: Build reason and rtop
