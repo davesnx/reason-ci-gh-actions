@@ -51,7 +51,7 @@ jobs:
       
       - name: Load opam cache when Windows
         if: runner.os == 'Windows'
-        id: opam-cache
+        id: opam-cache-windows
         uses: actions/cache/restore@v3
         with:
           path: _opam
@@ -83,7 +83,7 @@ jobs:
 
       - name: Save cache when Windows
         uses: actions/cache/save@v3
-        if: steps.opam-cache.outputs.cache-hit != 'true' || runner.os == 'Windows'
+        if: steps.opam-cache-windows.outputs.cache-hit != 'true' || runner.os == 'Windows'
         with:
           path: _opam
           key: opam-${{ matrix.os }}-${{ matrix.ocaml-compiler }}-${{ hashFiles('**.opam') }}
