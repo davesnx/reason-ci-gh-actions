@@ -41,11 +41,20 @@ jobs:
           ocaml-compiler: ${{ matrix.ocaml-compiler }}
           opam-pin: false
 
-      - name: Load opam cache
+      - name: Load opam cache when not Windows
+        if: runner.os != 'Windows'
         id: opam-cache
         uses: actions/cache/restore@v3
         with:
           path: ~/.opam
+          key: opam-${{ matrix.os }}-${{ matrix.ocaml-compiler }}-${{ hashFiles('**.opam') }}
+      
+      - name: Load opam cache when Windows
+        if: runner.os == 'Windows'
+        id: opam-cache
+        uses: actions/cache/restore@v3
+        with:
+          path: _opam
           key: opam-${{ matrix.os }}-${{ matrix.ocaml-compiler }}-${{ hashFiles('**.opam') }}
 
       - name: Install dependencies
@@ -65,9 +74,17 @@ jobs:
       - name: Test
         run: opam exec -- dune runtest
 
-      - name: Save cache
+      - name: Save cache when not Windows
         uses: actions/cache/save@v3
-        if: steps.opam-cache.outputs.cache-hit != 'true'
+        if: steps.opam-cache.outputs.cache-hit != 'true' || runner.os != 'Windows'
         with:
           path: ~/.opam
           key: opam-${{ matrix.os }}-${{ matrix.ocaml-compiler }}-${{ hashFiles('**.opam') }}
+
+      - name: Save cache when Windows
+        uses: actions/cache/save@v3
+        if: steps.opam-cache.outputs.cache-hit != 'true' || runner.os == 'Windows'
+        with:
+          path: _opam
+          key: opam-${{ matrix.os }}-${{ matrix.ocaml-compiler }}-${{ hashFiles('**.opam') }}
+
