@@ -45,7 +45,7 @@ jobs:
           cache: 'yarn'
       
       - name: Install esy
-        run: yarn global add --prefer-offline --prefix /usr/local esy@0.6.12
+        run: yarn global add --prefix /usr/local esy@0.6.12
 
       - name: Restore global cache (~/.esy/source)
         id: global-cache
