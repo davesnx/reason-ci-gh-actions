@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-esy@0.6.12:
-  version "0.6.12"
-  resolved "https://registry.yarnpkg.com/esy/-/esy-0.6.12.tgz#e4043677d36a3b39e48046d2bcb1ac7322c5140b"
-  integrity sha512-EJAbVSOA+KRAK86ZY3tSZUpbh9cYaUxIITycXFJp9yuH+XAuLrCSdTJsH+wvQniRrzAgUBJ6B2vYC2hFB09lTQ==
+"esy@^0.6.12":
+  "integrity" "sha512-EJAbVSOA+KRAK86ZY3tSZUpbh9cYaUxIITycXFJp9yuH+XAuLrCSdTJsH+wvQniRrzAgUBJ6B2vYC2hFB09lTQ=="
+  "resolved" "https://registry.npmjs.org/esy/-/esy-0.6.12.tgz"
+  "version" "0.6.12"
