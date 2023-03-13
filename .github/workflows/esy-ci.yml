@@ -43,13 +43,8 @@ jobs:
         with:
           node-version: 16
           cache: 'yarn'
-
-      - name: Install esy when Windows
-        if: runner.os == 'Windows'
-        run: yarn global add --prefer-offline esy@0.6.12
       
-      - name: Install esy when not Windows
-        if: runner.os != 'Windows'
+      - name: Install esy
         run: yarn global add --prefer-offline --prefix /usr/local esy@0.6.12
 
       - name: Restore global cache (~/.esy/source)
