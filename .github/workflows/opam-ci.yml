@@ -60,14 +60,6 @@ jobs:
       - name: Install dependencies
         run: opam install . --deps-only
 
-      - name: Debug ~
-        run: ls -lsha ~
-        shell: bash
-      
-      - name: Debug .
-        run: ls -lsha
-        shell: bash
-
       - name: Build reason and rtop
         run: opam exec -- dune build -p reason,rtop
 
